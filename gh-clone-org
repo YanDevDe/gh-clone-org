@@ -18,7 +18,9 @@ usage()
   echo "    Example: -s \"is:public language:go\""
   echo "    See: https://docs.github.com/en/github/searching-for-information-on-github/searching-on-github/searching-for-repositories"
   echo "  -n, --dry-run"
-  echo "    Do not actually clone, just show what would be cloned"
+  echo "    Do not actually clone, just show what would be cloned"  
+  echo "  -b, --pull-all-branch"
+  echo "    Include all remote branch"
   echo "  -h, --help"
   echo "    Display this message."
 }
