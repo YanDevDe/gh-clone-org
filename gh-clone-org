@@ -61,7 +61,7 @@ do
     -s | --search ) shift
       SEARCH="$1"
       ;;
-    -b | --pull-all-branch ) shift
+    -b | --pull-all-branch )
       PULL_ALL_BRANCH="true"
       ;;
     -n | --dry-run) DRY_RUN="true"
