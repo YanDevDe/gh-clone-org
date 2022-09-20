@@ -59,6 +59,9 @@ do
     -s | --search ) shift
       SEARCH="$1"
       ;;
+    -b | --pull-all-branch ) shift
+      PULL_ALL_BRANCH="true"
+      ;;
     -n | --dry-run) DRY_RUN="true"
       ;;
     -h | --help ) usage
@@ -148,14 +151,20 @@ set +e
 for repo in $REPOS
 do
   d=${repo#*/}
+  default_branch="$(gh api "repos/$repo" -q '.default_branch')"
   if [ -d "$d" ]
   then
     echo "'$d' already exists, attempting to checkout the default branch and pull"
     cd "$d"
-    default_branch="$(gh api "repos/$repo" -q '.default_branch')"
     git checkout "$default_branch" && git pull
     cd ..
   else
     gh repo clone "$repo"
+  fi
+  if [ "$PULL_ALL_BRANCH" != "true" ]
+    cd "$d"
+    for i in $(git branch -r | sed 's/^..origin\///' | grep -o '^\S*'); do git checkout $i; git pull; done
+    git checkout "$default_branch"
+    cd ..
   fi
 done
