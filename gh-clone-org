@@ -163,7 +163,7 @@ do
   else
     gh repo clone "$repo"
   fi
-  if [ "$PULL_ALL_BRANCH" != "true" ]
+  if [ "$PULL_ALL_BRANCH" == "true" ]
   then
     cd "$d"
     for i in $(git branch -r | sed 's/^..origin\///' | grep -o '^\S*'); do git checkout $i; git pull; done
