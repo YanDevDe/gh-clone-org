@@ -166,7 +166,13 @@ do
   if [ "$PULL_ALL_BRANCH" == "true" ]
   then
     cd "$d"
-    for i in $(git branch -r | sed 's/^..origin\///' | grep -o '^\S*'); do git checkout $i; git pull; done
+    for i in $(git branch -r | sed 's/^..origin\///' | grep -o '^\S*' | grep -wv 'HEAD'); 
+    do 
+      if [ "$default_branch" != "$i" ]
+      then
+        git checkout $i && git pull;
+      fi
+    done
     git checkout "$default_branch"
     cd ..
   fi
